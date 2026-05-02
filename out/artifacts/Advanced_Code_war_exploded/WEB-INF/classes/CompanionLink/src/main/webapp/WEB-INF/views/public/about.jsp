@@ -9,5 +9,12 @@
     </div>
         <div>
             <h3>Safety</h3>
-            <p>Admins approve volunteers before access.</p></div><div><h3>Accessibility</h3><p>Responsive pages with clear labels and large text.</p></div></div></div>
+            <p>Admins approve volunteers before access.</p>
+        </div>
+        <div>
+            <h3>Accessibility</h3>
+            <p>Responsive pages with clear labels and large text.</p>
+        </div>
+    </div>
+</div>
 <%@ include file="../partials/footer.jspf" %>

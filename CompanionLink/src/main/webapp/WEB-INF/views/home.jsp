@@ -9,24 +9,24 @@
         </div>
     </div>
     <div class="card">
-        <h2>Three portals</h2>
-        <p><b>Seniors:</b> requests, volunteers, visits, ratings, reports.</p>
-        <p><b>Volunteers:</b> requests, schedule, completed visit logs.</p>
-        <p><b>Admins:</b> approval, CRUD, monitoring, analytics.</p>
+        <h2>How CompanionLink work</h2>
+        <p><b>Create Your Profile</b></p>
+        <p><b>Request Companionship</b></p>
+        <p><b>Connect & Enjoy</b></p>
     </div>
 </section>
 <div class="grid">
     <div class="card">
-        <h3>Trust first</h3>
-        <p>Volunteer approval gate blocks unapproved volunteers.</p>
+        <h3>Safe & Secure</h3>
+        <p>All volunteers are carefully vetted and approved by our administrators before they can connect with seniors</p>
     </div>
     <div class="card">
-        <h3>Elder-friendly</h3>
-        <p>Large readable text and simple forms.</p>
+        <h3>Rated Volunteers</h3>
+        <p>Browse volunteer profiles with ratings and reviews from other seniors to find the perfect match</p>
     </div>
     <div class="card">
-        <h3>MVC Java</h3>
-        <p>Servlets, DAOs, models, JSP, MySQL and filter.</p>
+        <h3>Felxible Scheduling</h3>
+        <p>Choose activities and times that work for your schedule and preferences</p>
     </div>
 </div>
 <%@ include file="partials/footer.jspf" %>
