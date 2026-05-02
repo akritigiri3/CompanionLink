@@ -1,0 +1,3 @@
+package com.companionlink.servlet.senior;
+import com.companionlink.dao.UserDAO; import com.companionlink.servlet.BaseServlet; import jakarta.servlet.*; import jakarta.servlet.annotation.WebServlet; import jakarta.servlet.http.*; import java.io.IOException;
+@WebServlet("/senior/volunteers") public class SeniorVolunteersServlet extends BaseServlet { private final UserDAO dao=new UserDAO(); protected void doGet(HttpServletRequest r,HttpServletResponse h)throws ServletException,IOException{r.setAttribute("keyword",r.getParameter("q"));r.setAttribute("volunteers",dao.searchApprovedVolunteers(r.getParameter("q")));forward(r,h,"senior/volunteers");}}

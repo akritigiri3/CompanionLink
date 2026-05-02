@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="Advanced Code:war exploded">
+    <output-path>$PROJECT_DIR$/out/artifacts/Advanced_Code_war_exploded</output-path>
+    <root id="root">
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="library" level="project" name="mysql-connector-j-8.0.33" />
+        </element>
+      </element>
+      <element id="javaee-facet-resources" facet="Advanced Code/web/Web" />
+      <element id="javaee-facet-resources" facet="Advanced Code/web/Web2" />
+    </root>
+  </artifact>
+</component>

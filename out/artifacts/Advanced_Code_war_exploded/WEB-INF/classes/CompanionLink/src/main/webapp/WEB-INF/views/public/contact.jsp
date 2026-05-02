@@ -1,0 +1,3 @@
+<%@ include file="../partials/header.jspf" %>
+<div class="page-title"><h1>Contact and Help</h1></div><div class="grid two"><div class="card"><h2>Support enquiry</h2><form method="post" action="<%=ctx%>/contact"><label>Name</label><input name="name" required><label>Email</label><input type="email" name="email" required><label>Message</label><textarea name="message" required></textarea><button type="submit">Submit enquiry</button></form></div><div class="card"><h2>Emergency contacts</h2><p><b>Police:</b> 100</p><p><b>Ambulance:</b> 102</p><p><b>Fire:</b> 101</p><p class="muted">For urgent danger or medical emergency, do not wait for an online response.</p></div></div>
+<%@ include file="../partials/footer.jspf" %>

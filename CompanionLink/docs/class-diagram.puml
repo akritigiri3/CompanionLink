@@ -1,0 +1,42 @@
+@startuml
+skinparam classAttributeIconSize 0
+package model {
+  class User
+  class ActivityType
+  class CompanionRequest
+  class Visit
+  class Rating
+  class SafetyReport
+  class ContactEnquiry
+  class AnalyticsSummary
+}
+package dao {
+  class UserDAO
+  class ActivityTypeDAO
+  class RequestDAO
+  class VisitDAO
+  class RatingDAO
+  class SafetyReportDAO
+  class ContactDAO
+  class AdminDAO
+}
+package util {
+  class PasswordUtils
+  class SessionUtils
+  class ValidationUtils
+}
+UserDAO --> User
+ActivityTypeDAO --> ActivityType
+RequestDAO --> CompanionRequest
+VisitDAO --> Visit
+RatingDAO --> Rating
+SafetyReportDAO --> SafetyReport
+ContactDAO --> ContactEnquiry
+AdminDAO --> AnalyticsSummary
+CompanionRequest --> User : senior
+CompanionRequest --> ActivityType
+Visit --> CompanionRequest
+Visit --> User : senior / volunteer
+Rating --> Visit
+SafetyReport --> User
+@enduml

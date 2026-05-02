@@ -1,0 +1,7 @@
+<%@ include file="../partials/header.jspf" %>
+<div class="card form-card"><h1>Register</h1><form method="post" action="<%=ctx%>/register">
+<div class="field-grid"><div><label>Full name</label><input name="fullName" required pattern="[A-Za-z ]{2,100}"></div><div><label>Email</label><input type="email" name="email" required></div><div><label>Phone</label><input name="phone" required></div><div><label>Date of birth</label><input type="date" name="dateOfBirth" required></div><div><label>Role</label><select name="role"><option value="SENIOR">Senior</option><option value="VOLUNTEER">Volunteer</option></select></div><div><label>Address / Area</label><input name="address"></div></div>
+<label>Senior health notes</label><textarea name="healthNotes"></textarea><label>Senior emergency contact</label><input name="emergencyContact"><label>Volunteer bio</label><textarea name="bio"></textarea>
+<div class="field-grid"><div><label>Volunteer skills</label><input name="skills"></div><div><label>Volunteer availability</label><input name="availability"></div><div><label>Password</label><input type="password" name="password" required></div><div><label>Confirm password</label><input type="password" name="confirmPassword" required></div></div>
+<div class="actions"><button type="submit">Register</button><a href="<%=ctx%>/login">Already registered?</a></div></form></div>
+<%@ include file="../partials/footer.jspf" %>
