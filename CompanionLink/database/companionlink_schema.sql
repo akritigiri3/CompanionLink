@@ -2,10 +2,6 @@ DROP DATABASE IF EXISTS companion_link;
 CREATE DATABASE companion_link CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 USE companion_link;
 
--- =====================================================
--- CompanionLink 3NF NORMALIZED DATABASE SCHEMA
--- =====================================================
-
 CREATE TABLE roles (
     role_id TINYINT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
     role_name VARCHAR(30) NOT NULL UNIQUE
