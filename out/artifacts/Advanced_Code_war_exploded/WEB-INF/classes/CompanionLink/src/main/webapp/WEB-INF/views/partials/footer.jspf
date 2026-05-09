@@ -1,4 +1,49 @@
-</main>
-<footer class="footer">CompanionLink - safe community companionship for seniors.</footer>
-</body>
-</html>
+<footer>
+    <div class="footer-grid">
+        <div class="footer-brand">
+            <a href="index.html" class="logo">
+                <svg viewBox="0 0 24 24" width="24" height="24" stroke="white" fill="none" stroke-width="2">
+                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                </svg>
+                <span>CompanionLink</span>
+            </a>
+            <p>Connecting seniors with caring volunteers for meaningful companionship.</p>
+        </div>
+        <div class="footer-col">
+            <h4>Quick Links</h4>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About Us</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </div>
+        <div class="footer-col">
+            <h4>Emergency</h4>
+            <p><b>24/7 Support Line:</b></p>
+            <p class="phone">1-800-COMPANION</p>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        &copy; 2026 CompanionLink. All rights reserved. Built by Binary Titans.
+    </div>
+</footer>
+<style>
+footer { background: dimgrey ; color: rgba(255,255,255,.75); padding: 60px 5% 30px; }
+.footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 48px; margin-bottom: 40px; }
+.footer-brand .logo { margin-bottom: 14px; }
+.footer-brand .logo span { color: white; }
+.footer-brand p { font-size: 0.9rem; line-height: 1.6; }
+.footer-col h4 { font-size: 0.95rem; font-weight: 700; color: white; margin-bottom: 16px; }
+.footer-col ul { list-style: none; }
+.footer-col ul li { margin-bottom: 10px; }
+.footer-col ul li a { color: white; text-decoration: none; font-size: 0.9rem; transition: color .2s; }
+.footer-col ul li a:hover { color: bisque; }
+.footer-col p { font-size: 0.9rem; }
+.footer-col .phone { font-weight: 700; color: white; font-size: 1.05rem; margin-top: 6px; }
+.footer-bottom { border-top: 1px solid rgba(255,255,255,.1); padding-top: 24px; text-align: center; font-size: 0.85rem; }
+
+@media(max-width: 768px) {
+.ps-grid { grid-template-columns: 1fr; }
+.footer-grid { grid-template-columns: 1fr; gap: 32px; }
+}
+</style>
