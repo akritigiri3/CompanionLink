@@ -1,0 +1,3 @@
+package com.companionlink.servlet.volunteer;
+import com.companionlink.dao.VisitDAO; import com.companionlink.servlet.BaseServlet; import jakarta.servlet.*; import jakarta.servlet.annotation.WebServlet; import jakarta.servlet.http.*; import java.io.IOException;
+@WebServlet("/volunteer/schedule") public class VolunteerScheduleServlet extends BaseServlet { private final VisitDAO dao=new VisitDAO(); protected void doGet(HttpServletRequest r,HttpServletResponse h)throws ServletException,IOException{r.setAttribute("visits",dao.findByVolunteer(currentUser(r).getId()));forward(r,h,"volunteer/schedule");}}

@@ -1,0 +1,3 @@
+package com.companionlink.servlet.admin;
+import com.companionlink.dao.UserDAO; import com.companionlink.servlet.BaseServlet; import jakarta.servlet.*; import jakarta.servlet.annotation.WebServlet; import jakarta.servlet.http.*; import java.io.IOException;
+@WebServlet("/admin/users") public class AdminUsersServlet extends BaseServlet { private final UserDAO dao=new UserDAO(); protected void doGet(HttpServletRequest r,HttpServletResponse h)throws ServletException,IOException{r.setAttribute("users",dao.findAll());forward(r,h,"admin/users");} protected void doPost(HttpServletRequest r,HttpServletResponse h)throws IOException{dao.updateStatus(Integer.parseInt(r.getParameter("id")),r.getParameter("status"));ok(r,h,"/admin/users","User status updated.");}}
