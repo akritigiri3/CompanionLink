@@ -1,20 +1,20 @@
 <footer>
     <div class="footer-grid">
         <div class="footer-brand">
-            <a href="index.html" class="logo">
+            <a href="home.jsp" class="logo">
                 <svg viewBox="0 0 24 24" width="24" height="24" stroke="white" fill="none" stroke-width="2">
                     <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
                 </svg>
-                <span>CompanionLink</span>
+                <span><a href="<%=ctx%>/home">CompanionLink</a></span>
             </a>
             <p>Connecting seniors with caring volunteers for meaningful companionship.</p>
         </div>
         <div class="footer-col">
             <h4>Quick Links</h4>
             <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="about.html">About Us</a></li>
-                <li><a href="contact.html">Contact</a></li>
+                <li><a href="<%=ctx%>/home">Home</a></li>
+                <li><a href="<%=ctx%>/about">About</a></li>
+                <li><a href="<%=ctx%>/contact">Contact</a></li>
             </ul>
         </div>
         <div class="footer-col">
@@ -28,7 +28,7 @@
     </div>
 </footer>
 <style>
-footer { background: dimgrey ; color: rgba(255,255,255,.75); padding: 60px 5% 30px; }
+footer { background: black ; color: white; padding: 60px 5% 30px; }
 .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 48px; margin-bottom: 40px; }
 .footer-brand .logo { margin-bottom: 14px; }
 .footer-brand .logo span { color: white; }

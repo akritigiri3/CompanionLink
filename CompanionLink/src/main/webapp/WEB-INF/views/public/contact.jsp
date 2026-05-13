@@ -5,7 +5,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Contact – CompanionLink</title>
-    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800\&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
     <style>
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
         :root {
@@ -74,6 +74,7 @@
         .help-box p { font-size: 0.88rem; color: #1E40AF; line-height: 1.6; }
 
 
+
         /* MODAL */
         .modal-overlay {
             display: none; position: fixed; inset: 0;
@@ -100,7 +101,6 @@
     </style>
 </head>
 <body>
-
 
 <div class="page-hero">
     <h1>Contact Us</h1>
@@ -201,7 +201,6 @@
     </div>
 </div>
 
-
 <!-- SUCCESS MODAL -->
 <div class="modal-overlay" id="successModal">
     <div class="modal">
@@ -215,43 +214,26 @@
 </div>
 
 <script>
+    function sendMessage() {
+        const name = document.getElementById('contactName').value.trim();
+        const email = document.getElementById('contactEmail').value.trim();
+        const subject = document.getElementById('contactSubject').value;
+        const message = document.getElementById('contactMessage').value.trim();
+        if (!name || !email || !subject || !message) {
+            alert('Please fill in all fields before sending.');
+            return;
+        }
+        document.getElementById('successModal').classList.add('active');
+    }
+    function closeModal() {
+        document.getElementById('successModal').classList.remove('active');
+        document.getElementById('contactName').value = '';
+        document.getElementById('contactEmail').value = '';
+        document.getElementById('contactSubject').value = '';
+        document.getElementById('contactMessage').value = '';
+    }
+</script>
+</body>
+</html>
 
-    &#x20; function sendMessage() {
-
-    &#x20;   const name = document.getElementById('contactName').value.trim();
-
-    &#x20;   const email = document.getElementById('contactEmail').value.trim();
-
-    &#x20;   const subject = document.getElementById('contactSubject').value;
-
-    &#x20;   const message = document.getElementById('contactMessage').value.trim();
-
-    &#x20;   if (!name || !email || !subject || !message) {
-
-        &#x20;     alert('Please fill in all fields before sending.');
-
-        &#x20;     return;
-
-        &#x20;   }
-
-    &#x20;   document.getElementById('successModal').classList.add('active');
-
-    &#x20; }
-
-    &#x20; function closeModal() {
-
-    &#x20;   document.getElementById('successModal').classList.remove('active');
-
-    &#x20;   document.getElementById('contactName').value = '';
-
-    &#x20;   document.getElementById('contactEmail').value = '';
-
-    &#x20;   document.getElementById('contactSubject').value = '';
-
-    &#x20;   document.getElementById('contactMessage').value = '';
-
-    &#x20; }
-
-    </body>
-    </html>
 <%@ include file="../partials/footer.jspf" %>

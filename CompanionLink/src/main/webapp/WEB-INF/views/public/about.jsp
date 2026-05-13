@@ -5,7 +5,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>About – CompanionLink</title>
-    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800\&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
     <style>
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
         :root {
@@ -64,6 +64,7 @@
     </style>
 </head>
 <body>
+
 
 
 <!-- HERO -->
@@ -169,16 +170,11 @@
 </section>
 
 <script>
-
-    &#x20;   const links = document.querySelectorAll('.nav-links a');
-
-    &#x20;   links.forEach(link => {
-
-    &#x20;       if (link.href === window.location.href) link.classList.add('active');
-
-    &#x20;   });
-
-    </body>
-    </html>
-
+    const links = document.querySelectorAll('.nav-links a');
+    links.forEach(link => {
+        if (link.href === window.location.href) link.classList.add('active');
+    });
+</script>
+</body>
+</html>
 <%@ include file="../partials/footer.jspf" %>
