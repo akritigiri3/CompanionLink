@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <%@ include file="../partials/header.jspf" %>
 <!DOCTYPE html>
 <html lang="en">
