@@ -7,6 +7,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 import java.sql.Connection;
+import com.companionlink.config.DBConnection;
 
 @WebServlet("/testDB")
 public class TestServlet extends HttpServlet {

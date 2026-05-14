@@ -14,7 +14,9 @@ public class UserDAO {
     public boolean createUser(User u, String pass) {
         String insertUser = "INSERT INTO users(role_id,status_id,full_name,email,phone,date_of_birth,password_hash,address) " +
                 "VALUES((SELECT role_id FROM roles WHERE role_name=?),(SELECT status_id FROM account_statuses WHERE status_name=?),?,?,?,?,?,?)";
-        try (Connection c = DBConnection.getConnection()) {
+        Connection c = null;
+        try {
+            c = DBConnection.getConnection();
             c.setAutoCommit(false);
             try (PreparedStatement p = c.prepareStatement(insertUser, Statement.RETURN_GENERATED_KEYS)) {
                 String status = "VOLUNTEER".equalsIgnoreCase(u.getRole()) ? "PENDING" : "ACTIVE";
@@ -23,7 +25,11 @@ public class UserDAO {
                 p.setString(3, u.getFullName());
                 p.setString(4, u.getEmail());
                 p.setString(5, u.getPhone());
-                p.setDate(6, Date.valueOf(u.getDateOfBirth()));
+                if (u.getDateOfBirth() != null) {
+                    p.setDate(6, Date.valueOf(u.getDateOfBirth()));
+                } else {
+                    p.setNull(6, java.sql.Types.DATE);
+                }
                 p.setString(7, PasswordUtils.hashPassword(pass));
                 p.setString(8, u.getAddress());
                 if (p.executeUpdate() != 1) throw new SQLException("User insert failed");
@@ -42,7 +48,8 @@ public class UserDAO {
             c.commit();
             return true;
         } catch (SQLException e) {
-            throw new DaoException("Create user failed", e);
+            e.printStackTrace();
+            throw new DaoException("Create user failed: " + e.getMessage(), e);
         }
     }
 
