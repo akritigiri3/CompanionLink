@@ -12,6 +12,8 @@
             --blue: #2B5CE6; --blue-dark: #1a3fbf;
             --dark: #0f172a; --text: #374151; --muted: #6B7280;
             --border: #E5E7EB; --white: #ffffff; --bg: #F8FAFC;
+            --error: #DC2626; --error-bg: #FEF2F2; --error-border: #FECACA;
+
         }
         body { font-family: 'Manrope', sans-serif; color: var(--text); background: var(--bg); }
 
@@ -56,6 +58,39 @@
 
         /* STEP 2 */
         .password-hint { font-size: 0.78rem; color: var(--muted); margin-top: 6px; }
+
+        /* INLINE FIELD ERRORS */
+        .form-group input.input-error { border-color: var(--error); background: var(--error-bg); }
+        .field-error {
+            display: none; font-size: 0.78rem; color: var(--error);
+            margin-top: 6px; font-weight: 600; align-items: center; gap: 5px;
+        }
+        .field-error.visible { display: flex; }
+        .field-error svg { width: 14px; height: 14px; stroke: var(--error); fill: none; stroke-width: 2.5; flex-shrink: 0; }
+
+        /* DUPLICATE ALERT BANNER */
+        .duplicate-alert {
+            display: none; background: var(--error-bg); border: 1.5px solid var(--error-border);
+            border-radius: 10px; padding: 14px 16px; margin-bottom: 20px;
+            animation: slideDown .25s ease;
+        }
+        .duplicate-alert.visible { display: flex; gap: 12px; align-items: flex-start; }
+        @keyframes slideDown { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }
+        .duplicate-alert .alert-icon { width: 20px; height: 20px; stroke: var(--error); fill: none; stroke-width: 2; flex-shrink: 0; margin-top: 1px; }
+        .duplicate-alert .alert-title { font-size: 0.88rem; font-weight: 700; color: var(--error); margin-bottom: 4px; }
+        .duplicate-alert .alert-msg { font-size: 0.82rem; color: #7f1d1d; line-height: 1.5; }
+        .duplicate-alert .alert-msg strong { font-weight: 700; }
+
+        /* LOADING SPINNER */
+        .spinner {
+            display: inline-block; width: 16px; height: 16px;
+            border: 2px solid rgba(255,255,255,.4); border-top-color: #fff;
+            border-radius: 50%; animation: spin .7s linear infinite; vertical-align: middle; margin-right: 8px;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* DISABLE STATE */
+        .btn-register:disabled { background: #93aef0; cursor: not-allowed; }
 
         /* BUTTONS */
         .btn-continue, .btn-register {
@@ -176,9 +211,16 @@
                 </select>
             </div>
             <button class="btn-back" onclick="goToStep1()">&#8592; Back</button>
-            <button class="btn-register" onclick="handleRegister()">Create Account</button>
+            <button class="btn-register" id="btnRegister" onclick="handleRegister()">Create Account</button>
             <hr class="divider"/>
             <p class="signin-text">Already have an account? <a href="login.html">Sign in here</a></p>
+        </div>
+        <div class="duplicate-alert" id="duplicateAlert">
+            <svg class="alert-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            <div>
+                <div class="alert-title">Account Already Exists</div>
+                <div class="alert-msg" id="duplicateAlertMsg"></div>
+            </div>
         </div>
     </div>
 </div>
@@ -191,13 +233,30 @@
         </div>
         <h3>You have successfully registered!</h3>
         <p>Welcome to CompanionLink! Your account has been created. You can now sign in to your account.</p>
-        <button class="modal-btn" onclick="closeRegisterModal()">Go to Login</button>
+        <button class="modal-btn" onclick="closeRegisterModal()"><a href="<%=ctx%>/login">Go to Login</a></button>
     </div>
 </div>
 
 <script>
+    function showDuplicateAlert(msg) {
+        const el = document.getElementById('duplicateAlert');
+        document.getElementById('duplicateAlertMsg').innerHTML = msg;
+        el.classList.add('visible');
+        el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    function hideDuplicateAlert() {
+        document.getElementById('duplicateAlert').classList.remove('visible');
+    }
+
+    function setLoading(loading) {
+        const btn = document.getElementById('btnRegister');
+        btn.disabled = loading;
+        btn.innerHTML = loading ? '<span class="spinner"></span>Creating account…' : 'Create Account';
+    }
+
     function goToStep2() {
-        const name = document.getElementById('regName').value.trim();
+        const name  = document.getElementById('regName').value.trim();
         const email = document.getElementById('regEmail').value.trim();
         const phone = document.getElementById('regPhone').value.trim();
         if (!name || !email || !phone) {
@@ -210,6 +269,7 @@
         document.getElementById('stepCircle1').classList.add('inactive');
         document.getElementById('stepCircle2').classList.remove('inactive');
         document.getElementById('stepCircle2').classList.add('active');
+        hideDuplicateAlert();
     }
 
     function goToStep1() {
@@ -219,29 +279,91 @@
         document.getElementById('stepCircle2').classList.add('inactive');
         document.getElementById('stepCircle1').classList.remove('inactive');
         document.getElementById('stepCircle1').classList.add('active');
+        hideDuplicateAlert();
     }
 
-    function handleRegister() {
+    async function handleRegister() {
         const password = document.getElementById('regPassword').value.trim();
-        const confirm = document.getElementById('regConfirm').value.trim();
-        if (!password || !confirm) {
-            alert('Please enter and confirm your password.');
-            return;
+        const confirm  = document.getElementById('regConfirm').value.trim();
+
+        hideDuplicateAlert();
+
+        if (!password || !confirm) { alert('Please enter and confirm your password.'); return; }
+        if (password.length < 8)   { alert('Password must be at least 8 characters long.'); return; }
+        if (password !== confirm)   { alert('Passwords do not match. Please try again.'); return; }
+
+        const payload = {
+            role:     document.getElementById('regRole').value,
+            name:     document.getElementById('regName').value.trim(),
+            email:    document.getElementById('regEmail').value.trim(),
+            phone:    document.getElementById('regPhone').value.trim(),
+            dob:      document.getElementById('regDob').value,
+            address:  document.getElementById('regAddress').value.trim(),
+            password: password,
+            source:   document.getElementById('regSource').value
+        };
+
+        setLoading(true);
+        setLoading(true);
+
+
+        try {
+            const resp = await fetch('<%=ctx%>/register', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: new URLSearchParams({
+                    fullName:        payload.name,
+                    email:           payload.email,
+                    phone:           payload.phone,
+                    role:            payload.role === 'Senior (Elderly Person)' ? 'SENIOR' : 'VOLUNTEER',
+                    password:        payload.password,
+                    confirmPassword: payload.password,
+                    dateOfBirth:     payload.dob && payload.dob !== '' ? payload.dob : '2000-01-01',  // ← this line
+                    address:         payload.address,
+                    source:          payload.source
+                }).toString()
+            });
+
+            const text = await resp.text();   // read as text first
+            let data;
+            try {
+                data = JSON.parse(text);      // then try to parse
+            } catch(parseErr) {
+                // response wasn't JSON — likely a JSP error page or redirect
+                console.error('Non-JSON response:', text);
+                showDuplicateAlert('Server error. Please try again.');
+                return;
+            }
+
+            if (data.success) {
+                document.getElementById('registerModal').classList.add('active');
+            } else if (data.duplicateEmail || data.duplicatePhone) {
+                const emailVal = payload.email;
+                const phoneVal = payload.phone;
+                let msg = '';
+                if (data.duplicateEmail && data.duplicatePhone) {
+                    msg = `An account with email <strong>${emailVal}</strong> and phone <strong>${phoneVal}</strong> already exists. Please use unique details, or <a href="<%=ctx%>/login" style="color:var(--error);font-weight:700;">sign in</a>.`;
+                } else if (data.duplicateEmail) {
+                    msg = `The email <strong>${emailVal}</strong> is already registered. Please use a different email, or <a href="<%=ctx%>/login" style="color:var(--error);font-weight:700;">sign in</a>.`;
+                } else {
+                    msg = `The phone number <strong>${phoneVal}</strong> is already linked to an account. Please use a different phone number.`;
+                }
+                showDuplicateAlert(msg);
+            } else {
+                showDuplicateAlert(data.message || 'Registration failed. Please check your details.');
+            }
+
+        } catch (err) {
+            showDuplicateAlert('Unable to reach the server. Please check your connection and try again.');
+            console.error('Registration error:', err);
+        } finally {
+            setLoading(false);
         }
-        if (password.length < 8) {
-            alert('Password must be at least 8 characters long.');
-            return;
-        }
-        if (password !== confirm) {
-            alert('Passwords do not match. Please try again.');
-            return;
-        }
-        document.getElementById('registerModal').classList.add('active');
     }
 
     function closeRegisterModal() {
         document.getElementById('registerModal').classList.remove('active');
-        window.location.href = 'login.html';
+        window.location.href = '<%=ctx%>/login';
     }
 </script>
 </body>

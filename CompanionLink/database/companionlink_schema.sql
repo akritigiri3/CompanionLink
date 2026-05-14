@@ -236,4 +236,51 @@ LEFT JOIN volunteer_profiles vp ON u.user_id = vp.volunteer_id
 LEFT JOIN v_volunteer_skill_list vsl ON u.user_id = vsl.volunteer_id
 LEFT JOIN v_volunteer_average_ratings var ON u.user_id = var.volunteer_id;
 
+CREATE VIEW v_user_details AS
+SELECT
+    u.user_id AS id,
+    u.full_name,
+    u.email,
+    u.phone,
+    u.date_of_birth,
+    u.password_hash,
+    r.role_name AS role,
+    s.status_name AS status,
+    u.address,
+    sp.health_notes,
+
+    CONCAT(
+            COALESCE(sp.emergency_contact_name, ''),
+            ' - ',
+            COALESCE(sp.emergency_contact_phone, ''),
+            ' - ',
+            COALESCE(sp.emergency_contact_relation, '')
+    ) AS emergency_contact,
+
+    vp.bio,
+
+    (
+        SELECT GROUP_CONCAT(sk.skill_name SEPARATOR ', ')
+        FROM volunteer_skills vs
+                 JOIN skills sk ON vs.skill_id = sk.skill_id
+        WHERE vs.volunteer_id = u.user_id
+    ) AS skills,
+
+    vp.availability,
+
+    (
+        SELECT COALESCE(AVG(rat.stars), 0)
+        FROM visits v
+                 JOIN ratings rat ON v.visit_id = rat.visit_id
+        WHERE v.volunteer_id = u.user_id
+    ) AS average_rating,
+
+    u.created_at
+
+FROM users u
+         JOIN roles r ON u.role_id = r.role_id
+         JOIN account_statuses s ON u.status_id = s.status_id
+         LEFT JOIN senior_profiles sp ON u.user_id = sp.senior_id
+         LEFT JOIN volunteer_profiles vp ON u.user_id = vp.volunteer_id;
+
 SHOW TABLES;
