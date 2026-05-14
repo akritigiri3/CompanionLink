@@ -153,18 +153,48 @@
 </div>
 
 <script>
+
+    let selectedRole = "";
+
     function handleLogin() {
-        const email = document.getElementById('loginEmail').value.trim();
-        const password = document.getElementById('loginPassword').value.trim();
-        if (!email || !password) {
-            alert('Please enter your email address and password.');
+
+        const email = document.getElementById("loginEmail").value.trim();
+        const password = document.getElementById("loginPassword").value.trim();
+
+        selectedRole = document.getElementById("loginRole").value;
+
+        if(email === "" || password === "") {
+            alert("Please enter email and password");
             return;
         }
-        document.getElementById('loginModal').classList.add('active');
+
+        // Show success modal
+        document.getElementById("loginModal").classList.add("active");
     }
+
     function closeLoginModal() {
-        document.getElementById('loginModal').classList.remove('active');
+
+        document.getElementById("loginModal").classList.remove("active");
+
+        // Redirect according to role
+
+        if(selectedRole === "Senior (Elderly Person)") {
+
+            window.location.href = "<%=ctx%>/senior/dashboard.jsp";
+
+        }
+        else if(selectedRole === "Volunteer") {
+
+            window.location.href = "<%=ctx%>/volunteer/dashboard.jsp";
+
+        }
+        else if(selectedRole === "Administrator") {
+
+            window.location.href = "<%=ctx%>/admin/dashboard.jsp";
+
+        }
     }
+
 </script>
 </body>
 </html>
